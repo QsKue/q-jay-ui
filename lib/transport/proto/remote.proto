@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package remote;
+
+message RotationSegment {
+  uint32 minutes = 1;
+  bytes selection_id = 2;
+  repeated uint32 energies = 3;
+  uint32 song_duration = 4;
+}
+
+message ScheduleRotation {
+  uint32 minute = 1;
+  repeated RotationSegment segments = 2;
+}
+
+message ScheduleRotationList {
+  repeated ScheduleRotation rotations = 1;
+}
+
+message Schedule {
+  bytes id = 1;
+  string name = 2;
+  bool pinned = 3;
+  repeated uint32 days = 4;
+  uint32 rotation_count = 5;
+}
+
+message Selection {
+  bytes id = 1;
+  bytes category_id = 2;
+  string category = 3;
+  string name = 4;
+  bool pinned = 5;
+  repeated uint32 available_energies = 6;
+  repeated uint32 default_energies = 7;
+  uint32 default_song_count = 8;
+}
+
+message Preset {
+  oneof kind {
+    Schedule schedule = 1;
+    Selection selection = 2;
+  }
+}
+
+message PresetInfo {
+  uint32 mode = 1;
+  bytes id = 2;
+  bytes details = 3;
+}
+
+message PresetList {
+  repeated Preset presets = 1;
+}
+
+message Song {
+  bytes id = 1;
+  string artist = 2;
+  string title = 3;
+  bool played = 4;
+  bool liked = 5;
+  bool pinned = 6;
+  bool banned = 7;
+  uint64 date_added_ms = 8;
+}
+
+message SongList {
+  repeated Song songs = 1;
+}

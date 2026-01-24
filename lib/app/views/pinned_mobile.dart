@@ -1,0 +1,120 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:qjay/app/store/page_pinned_store.dart';
+import 'package:qjay/app/store/player_store.dart';
+import 'package:qjay/widgets/button/back_button.dart';
+import 'package:qjay/widgets/navigation_bar/bottom_navigation_bar.dart';
+import 'package:qjay/widgets/player_bar/player_bar_compact.dart';
+import 'package:qjay/widgets/preset_view/preset_view.dart';
+import 'package:qjay/widgets/preset_view/preset_view_delegates.dart';
+import 'package:qjay/widgets/song_list/song_list.dart';
+import 'package:qjay/widgets/song_list/song_list_types.dart';
+
+const _defaultColumns = [SongListColumn.play, SongListColumn.track, SongListColumn.remove];
+
+class PinnedMobile extends StatefulWidget {
+
+  const PinnedMobile({super.key});
+
+  @override
+  State<PinnedMobile> createState() => _PinnedMobileState();
+}
+
+class _PinnedMobileState extends State<PinnedMobile> implements PresetViewDataSource, PresetViewReorderDelegate {
+  @override
+  Widget itemAtIndex(BuildContext context, int index) {
+    return SongListRow<PinnedPageStore>(
+      index: index,
+      columns: _defaultColumns,
+      onCellTap: (column) {
+        switch (column) {
+          case SongListColumn.play:
+            final song = context.read<PinnedPageStore>().songList.elementAtOrNull(index);
+            if (song == null) return;
+      
+            context.read<PlayerStore>().skipToSong(song);
+            break;
+          case SongListColumn.remove:
+            final song = context.read<PinnedPageStore>().songList.elementAtOrNull(index);
+            if (song == null) return;
+    
+            context.read<PinnedPageStore>().removePinnedSong(song.id);
+            break;
+          default:
+            return;
+        }
+      },
+    );
+  }
+
+  @override
+  Future<void> prefetchRange(int start, int count, {Object? sortKey})
+    => mounted ? context.read<PinnedPageStore>().getPinnedSongs(start, count) : Future.value();
+
+  @override
+  Object sourceId(BuildContext context) {
+    final songLength = context.read<PinnedPageStore>().songList.length;
+    return "pinned-preset-view-$songLength";
+  }
+
+  @override
+  String labelForIndex(BuildContext context, int index) {
+    final song = context.read<PinnedPageStore>().songList[index];
+    if (song == null) {
+      return "Song...";
+    }
+    return "${song.artist}\n${song.title}";
+  }
+
+  @override
+  void onReorderRequested(BuildContext context, int oldIndex, int newIndex) {
+    context.read<PinnedPageStore>().reorderPinnedSongs(oldIndex, newIndex);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final themeData = Theme.of(context);
+    final colorScheme = ColorScheme.of(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        leading: NavigationBackButton(icon: Icons.featured_play_list_outlined),
+        titleSpacing: 0,
+        title: Align(
+          alignment: AlignmentGeometry.centerLeft,
+          child: Text(
+            "Pinned List",
+            style: themeData.textTheme.headlineSmall?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.bold,
+            )
+          ),
+        ),
+      ),
+
+      body: Builder(builder: (context) {
+        final songCount = context.select<PinnedPageStore, int>((store) => store.songList.length);
+
+        return Column(
+          children: [
+            
+            Expanded(
+              child: PresetView(
+                dataSource: this,
+                reorderDelegate: this,
+                chunkSize: 4,
+                overscanChunks: 2,
+                itemCount: songCount,
+              ),
+            ),
+
+            PlayerBarCompact(),
+          ]
+        );
+      }),
+
+      bottomNavigationBar: AppBottomNavigationBar(index: 1),
+    );
+  }
+}

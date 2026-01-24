@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package error;
+
+enum ErrorType {
+  IGNORED = 0;
+  WARNING = 1;
+  ERROR = 2;
+  CONNECTION = 3;
+}
+
+message GenericError {
+  string title = 1;
+  string message = 2;
+  ErrorType type = 3;
+}
+
+enum SetupErrorType {
+  USER_SETUP = 0;
+  DATA_SETUP = 1;
+}
+
+message SetupError {
+  SetupErrorType code = 1;
+}
+
+message SubscriptionExpiredError {
+  bool checked = 1;
+}
+
+message SecurityError {
+
+}
+
+message Error {
+  oneof error {
+    GenericError generic = 1;
+    SetupError setup = 2;
+    SubscriptionExpiredError subscription_expired = 3;
+    SecurityError security = 4;
+  }
+}

@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package request_client;
+
+message SetupClient {
+  string db_path = 1;
+  string id = 4; // 2 when bytes
+  string name = 3;
+}
+
+message SetupWithUpdate {
+  string db_path = 1;
+  string song_dir = 2;
+}
+
+message SetupRuntime {
+  string song_dir = 1;
+  string db_path = 2;
+  string update_dir = 3;
+  string update_package = 4;
+}
+
+message GetWifiNetworkCount {
+  
+}
+
+message GetWifiNetworks {
+  uint32 start_index = 1;
+  uint32 end_index = 2;
+}
+
+message ConnectToSsid {
+  string ssid = 1;
+  bytes enc_pass = 2;
+  bytes pass_nonce = 3;
+}
+
+message SubscriptionStatus {
+  
+}
+
+message ValidateSubscription {
+
+}
+
+message AddOfflineKey {
+  string key = 1;
+}
+
+message ClientRequest {
+  oneof action {
+    SetupClient setup_client = 1;
+    SetupWithUpdate setup_with_update = 2;
+    SetupRuntime setup_runtime = 3;
+    GetWifiNetworkCount get_wifi_network_count = 4;
+    GetWifiNetworks get_wifi_networks = 5;
+    ConnectToSsid connect_to_ssid = 6;
+    SubscriptionStatus subscription_status = 7;
+    ValidateSubscription validate_subscription = 8;
+    AddOfflineKey add_offline_key = 9;
+  }
+}

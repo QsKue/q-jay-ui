@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package request_playback;
+
+message Setup {
+
+}
+
+message Play {
+
+}
+
+message Pause {
+
+}
+
+message Stop {
+
+}
+
+message Next {
+
+}
+
+message SkipToSong {
+  bytes song_id = 1;
+}
+
+message GetCurrentPreset {
+  
+}
+
+message GetCurrentSong {
+  
+}
+
+message GetCurrentState {
+  
+}
+
+message SetProgress {
+  float percentage = 1;
+}
+
+message GetVolume {
+  
+}
+
+message SetVolume {
+  float percentage = 1;
+}
+
+message PlaybackRequest {
+  oneof action {
+    Setup setup = 1;
+
+    Play play = 2;
+    Pause pause = 3;
+    Stop stop = 4;
+    Next next = 5;
+    SkipToSong skip_to_song = 6;
+
+    GetCurrentPreset get_current_preset = 7;
+    GetCurrentSong get_current_song = 8;
+    GetCurrentState get_current_state = 9;
+
+    SetProgress set_progress = 10;
+    
+    GetVolume get_volume = 11;
+    SetVolume set_volume = 12;
+  }
+}

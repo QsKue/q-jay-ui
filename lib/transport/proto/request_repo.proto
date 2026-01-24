@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+package request_repo;
+
+message GetPresetCount {
+  
+}
+
+message GetPresets {
+  uint32 start_index = 1;
+  uint32 end_index = 2;
+}
+
+message GetSchedule {
+  bytes schedule_id = 1;
+}
+
+message GetScheduleRotations {
+  bytes schedule_id = 1;
+  uint32 start_index = 2;
+  uint32 end_index = 3;
+}
+
+message GetSelection {
+  bytes selection_id = 1;
+}
+
+message GetSelectionSongCount {
+  bytes selection_id = 1;
+  bytes energies = 2;
+}
+
+message GetSelectionSongs {
+  bytes selection_id = 1;
+  bytes energies = 2;
+  uint32 sort_mode = 3;
+  uint32 start_index = 4;
+  uint32 end_index = 5;
+}
+
+message GetSong {
+  bytes song_id = 1;
+}
+
+message SetSchedule {
+  bytes schedule_id = 1;
+}
+
+message SetSelection {
+  bytes selection_id = 1;
+  optional bytes start_song_id = 2;
+  bytes energies = 3;
+  uint32 song_duration = 4;
+}
+
+message SearchGetCount {
+  string query = 1;
+}
+
+message SearchGetSongs {
+  string query = 1;
+  uint32 start_index = 2;
+  uint32 end_index = 3;
+}
+
+message AddToExceptions {
+  bytes song_id = 1;
+  bool skip_to_next = 2;
+}
+
+message RemoveFromExceptions {
+  bytes song_id = 1;
+}
+
+message GetPinnedSongCount {
+
+}
+
+message GetPinnedSongs {
+  uint32 start_index = 1;
+  uint32 end_index = 2;
+}
+
+message AddToPinned {
+  bytes song_id = 1;
+  uint32 index = 2;
+}
+
+message RemoveFromPinned {
+  bytes song_id = 1;
+}
+
+message ReorderPinned {
+  uint32 a = 1;
+  uint32 b = 2;
+}
+
+message RepoRequest {
+  oneof action {
+    GetPresetCount get_preset_count = 1;
+    GetPresets get_presets = 2;
+
+    GetSchedule get_schedule = 3;
+    GetScheduleRotations get_schedule_rotations = 4;
+    GetSelection get_selection = 5;
+    GetSelectionSongCount get_selection_song_count  = 6;
+    GetSelectionSongs get_selection_songs = 7;
+    GetSong get_song = 8;
+
+    SetSchedule set_schedule = 9;
+    SetSelection set_selection = 10;
+
+    SearchGetCount search_get_count = 11;
+    SearchGetSongs search_get_songs = 12;
+
+    AddToExceptions add_to_exceptions = 13;
+    RemoveFromExceptions remove_from_exceptions = 14;
+
+    GetPinnedSongCount get_pinned_song_count = 15;
+    GetPinnedSongs get_pinned_songs = 16;
+    AddToPinned add_to_pinned = 17;
+    RemoveFromPinned remove_from_pinned = 18;
+    ReorderPinned reorder_pinned = 19;
+  }
+}

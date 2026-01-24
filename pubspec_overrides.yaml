@@ -1,0 +1,4 @@
+# melos_managed_dependency_overrides: universal_ble
+dependency_overrides:
+  universal_ble:
+    path: ../../packages/ext/universal_ble

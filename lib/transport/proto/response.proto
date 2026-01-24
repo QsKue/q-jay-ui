@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package response;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+import "error.proto";
+import "remote.proto";
+
+message UpdateProgressEvent {
+  uint32 value = 1;
+  float progress = 2; 
+  string message = 3;
+}
+
+message WifiNetworkList {
+  repeated string items = 1;
+  int32 active_index = 2;
+}
+
+message Response {
+  oneof response {
+    error.Error error = 1;
+    google.protobuf.Empty ok = 2;
+
+    bool bool = 3;
+    uint32 uint32 = 4;
+    uint64 uint64 = 5;
+    int32 int32 = 6;
+    int64 int64 = 7;
+    float float = 8;
+    double double = 9;
+    google.protobuf.Timestamp date = 10;
+
+    remote.PresetInfo preset_info = 11;
+    remote.Schedule schedule = 12;
+    remote.ScheduleRotationList schedule_rotations = 13;
+    remote.Selection selection = 14;
+    remote.PresetList preset_list = 15;
+    remote.SongList song_list = 16;
+    UpdateProgressEvent update_progress_event = 17;
+
+    WifiNetworkList wifi_network_list = 18;
+  }
+}

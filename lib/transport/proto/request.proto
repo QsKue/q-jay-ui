@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package request;
+
+import "request_client.proto";
+import "request_playback.proto";
+import "request_repo.proto";
+
+message Request {
+    oneof request {
+        request_client.ClientRequest client = 1;
+        request_repo.RepoRequest repo = 2;
+        request_playback.PlaybackRequest playback = 3;
+    }
+}
