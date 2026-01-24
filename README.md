@@ -1,17 +1,21 @@
-# qjay
+# QJay Remote
 
-A new Flutter project.
+This is the crossplatform UI for the QJay Remote app for mobile & desktop.
 
--- Proto
-    sudo dnf install protobuf-compiler protobuf-devel
-    dart pub global activate protoc_plugin
+QJay uses protobuf protocol for communication.
 
-    protoc -Ilib/transport/proto -I/usr/include --dart_out=lib/transport/proto lib/transport/proto/*.proto /usr/include/google/protobuf/empty.proto /usr/include/google/protobuf/timestamp.proto
+Transport works accross FFI, BLE and HTTP.
+Communication occurs via 1 endpoint through which all messages are passed.
 
--- SSH
-    - security unlock-keychain -p "pass" ~/Library/Keychains/login.keychain-db
-    - security show-keychain-info ~/Library/Keychains/login.keychain-db
-
-    - brew install ios-deploy
-    - flutter build ios --release
-    - ios-deploy --bundle build/ios/iphoneos/Runner.app   
+* FFT:
+    * Currenlty supports dart via SnedPorts / Isolate
+    * Relies on initialization function and setting up event listener for communication
+* BLE:
+    * QJay initializes a GATT server for communication.
+    * BLE exposes multiple charachteristics, one for sending messages and the remainder for receving notifications.
+* HTTP:
+    * QJay sets up a local server who's address is advertised on _qjay._tcp
+    * Communication is established via /request POST endpoint which handles all the messages
+    * Notifications are sent via /listener websocket
+ 
+The three ways of communication are identical, therefore a single implementation of the message handling can be reused for the different transports as seen in the code
