@@ -1,5 +1,17 @@
 # QJay Remote
 
+⚠️ **License Notice**  
+This repository contains **proprietary source code** owned by **Q's S.A.R.L**. 
+The code is public for transparency and educational purposes only. 
+
+- **No** commercial use is permitted.
+- **No** modification or redistribution is allowed.
+- All rights are reserved by **Fady Fadlallah**.
+
+For more details, please see the [LICENSE](LICENSE) file.
+
+# Description
+
 This is the crossplatform UI for the QJay Remote app for mobile & desktop.
 
 QJay uses protobuf protocol for communication.
