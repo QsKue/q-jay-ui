@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:universal_ble/universal_ble.dart';
+import 'package:uuid/uuid.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:protobuf/protobuf.dart' as pb;
 import 'package:qjay/models/request.dart';
@@ -8,8 +11,6 @@ import 'package:qjay/models/song.dart';
 import 'package:qjay/transport/ble/permission_handler.dart';
 import 'package:qjay/transport/proto/error.pb.dart' show GenericError;
 import 'package:qjay/transport/proto/error.pbenum.dart';
-import 'package:universal_ble/universal_ble.dart';
-
 import 'package:qjay/models/common.dart';
 import 'package:qjay/models/response.dart';
 import 'package:qjay/transport/proto/request.pb.dart';
@@ -17,7 +18,6 @@ import 'package:qjay/transport/proto/response.pb.dart' as proto;
 import 'package:qjay/transport/transport.dart';
 import 'package:qjay/transport/transport_dynamic.dart';
 import 'package:qjay/transport/transport_events.dart';
-import 'package:uuid/uuid.dart';
 
 import '../proto/error.pb.dart' as pberror;
 import 'client.dart';
