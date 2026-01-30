@@ -1,6 +1,7 @@
 # QJay Remote
 
 ⚠️ **License Notice**  
+
 This repository contains **proprietary source code** owned by **Q's S.A.R.L**. 
 The code is public for transparency and educational purposes only. 
 
@@ -20,7 +21,7 @@ Transport works accross FFI, BLE and HTTP.
 Communication occurs via 1 endpoint through which all messages are passed.
 
 * FFT:
-    * Currenlty supports dart via SnedPorts / Isolate
+    * Currenlty supports dart via SendPorts / Isolate
     * Relies on initialization function and setting up event listener for communication
 * BLE:
     * QJay initializes a GATT server for communication.
