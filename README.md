@@ -32,3 +32,10 @@ Communication occurs via 1 endpoint through which all messages are passed.
     * Notifications are sent via /listener websocket
  
 The three ways of communication are identical, therefore a single implementation of the message handling can be reused for the different transports as seen in the code
+
+# Mock Testing
+
+Run qjay binary with arguments to make commands:
+* qjay play
+   * ok: {"success": true}
+   * err: {"success": false, "error": "error message"} 
