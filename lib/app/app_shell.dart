@@ -186,7 +186,11 @@ class AppShell extends StatelessWidget {
         title: (mode != ShellMode.empty && (Platform.isWindows || Platform.isLinux || Platform.isMacOS))
           ? Row(
               children: [
-                Expanded(child: _WindowDragArea(Container())),
+                Expanded(
+                  child: _WindowDragArea(
+                    SizedBox(height: kToolbarHeight, child: const ColoredBox(color: Colors.transparent)),
+                  ),
+                ),
 
                 Padding(
                   padding: const EdgeInsets.only(right: 16),
@@ -220,7 +224,11 @@ class AppShell extends StatelessWidget {
                   ),
                 ),
 
-                Expanded(child: _WindowDragArea(Container())),
+                Expanded(
+                  child: _WindowDragArea(
+                    SizedBox(height: kToolbarHeight, child: const ColoredBox(color: Colors.transparent)),
+                  ),
+                ),
               ],
             )
           : title,

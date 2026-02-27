@@ -9,7 +9,6 @@ import 'package:qjay/app/store/page_search_store.dart';
 import 'package:qjay/app/store/page_selection_store.dart';
 import 'package:qjay/app/store/player_store.dart';
 import 'package:qjay/app/theme/app_context.dart';
-import 'package:qjay/app/store/nav_rail_store.dart';
 import 'package:qjay/app/views/schedule_view.dart';
 import 'package:qjay/app/views/search_view.dart';
 import 'package:qjay/app/views/selection_view.dart';
