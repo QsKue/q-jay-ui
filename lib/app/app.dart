@@ -47,7 +47,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       context.read<AppStore>().reconnect();
-      context.read<PlayerStore>().updateCurrentSong();
+      
+      final playerStore = Provider.of<PlayerStore?>(context, listen: false);
+      playerStore?.updateCurrentSong();
     }
   }
 

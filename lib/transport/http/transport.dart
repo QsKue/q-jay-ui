@@ -152,11 +152,6 @@ class TransportHttp extends TransportDynamic {
   }
 
   @override
-  Future<Result<()>> bootstrap() async {
-    return Ok(());
-  }
-
-  @override
   Future<void> disconnect() async {
     _cleanupWs();
     _connectionStream.add(ConnectionDisconnectedEvent());
