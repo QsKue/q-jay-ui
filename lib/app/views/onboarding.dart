@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:qjay/app/app_shell.dart';
 
+import 'package:qjay/app/app_shell.dart';
 import 'package:qjay/app/store/app_store.dart';
 import 'package:qjay/assets/q_jay_icons.dart';
 import 'package:qjay/models/common.dart';
@@ -49,6 +49,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     final updaterEvent = context.select<AppStore, UpdaterEvent?>((store) => store.updaterEvent);
     
     return AppShell(
+      shellMode: ShellMode.empty,
       navIcon: isUserSetup ? QJay.qs_logo : Icons.arrow_back_ios_new_rounded,
       navAction: store.onboardingGoBack,
       title: Align(

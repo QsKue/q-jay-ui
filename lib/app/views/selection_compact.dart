@@ -20,14 +20,14 @@ import 'package:qjay/widgets/preset_view/preset_view_theme.dart';
 import 'package:qjay/widgets/song_list/song_list.dart';
 import 'package:qjay/widgets/song_list/song_list_types.dart';
 
-class SelectionMobile extends StatefulWidget {
-  const SelectionMobile({super.key});
+class SelectionCompact extends StatefulWidget {
+  const SelectionCompact({super.key});
 
   @override
-  State<SelectionMobile> createState() => _SelectionMobileState();
+  State<SelectionCompact> createState() => _SelectionCompactState();
 }
 
-class _SelectionMobileState extends State<SelectionMobile> implements PresetViewDataSource {
+class _SelectionCompactState extends State<SelectionCompact> implements PresetViewDataSource {
   late List<SongListColumn> _columns = [];
 
   @override
@@ -95,8 +95,8 @@ class _SelectionMobileState extends State<SelectionMobile> implements PresetView
   }
   
   @override
-  Future<void> prefetchRange(int start, int count, {Object? sortKey})
-    => mounted ? context.read<SelectionPageStore>().getSelectionSongs(start, count) : Future.value();
+  Future<void> prefetchRange(BuildContext context, int start, int count, {Object? sortKey})
+    => context.read<SelectionPageStore>().getSelectionSongs(start, count);
 
   @override
   Widget build(BuildContext context) {

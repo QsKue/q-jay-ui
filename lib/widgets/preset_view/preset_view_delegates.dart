@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract class PresetViewDataSource {
   Object sourceId(BuildContext context);
-  Future<void> prefetchRange(int start, int count);
+  Future<void> prefetchRange(BuildContext context, int start, int count);
   Widget itemAtIndex(BuildContext context, int index);
 }
 

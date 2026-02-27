@@ -3,24 +3,16 @@ import 'package:provider/provider.dart';
 
 import 'package:qjay/app/store/page_pinned_store.dart';
 import 'package:qjay/app/store/player_store.dart';
-import 'package:qjay/models/song.dart';
-import 'package:qjay/widgets/preset_banner/preset_banner_theme.dart';
 import 'package:qjay/widgets/preset_view/preset_view.dart';
 import 'package:qjay/widgets/preset_view/preset_view_delegates.dart';
 import 'package:qjay/widgets/song_list/song_list.dart';
 import 'package:qjay/widgets/song_list/song_list_types.dart';
 
-const _defaultColumns = [SongListColumn.play, SongListColumn.track, SongListColumn.remove];
+class PinnedView extends StatelessWidget implements PresetViewDataSource, PresetViewReorderDelegate {
+  final _defaultColumns = const [SongListColumn.play, SongListColumn.track, SongListColumn.remove];
 
-class PinnedDesktop extends StatefulWidget {
+  const PinnedView({super.key});
 
-  const PinnedDesktop({super.key});
-
-  @override
-  State<PinnedDesktop> createState() => _PinnedDesktopState();
-}
-
-class _PinnedDesktopState extends State<PinnedDesktop> implements PresetViewDataSource, PresetViewReorderDelegate, PresetViewDragDataDelegate {
   @override
   Widget itemAtIndex(BuildContext context, int index) {
     return SongListRow<PinnedPageStore>(
@@ -48,7 +40,7 @@ class _PinnedDesktopState extends State<PinnedDesktop> implements PresetViewData
   }
 
   @override
-  Future<void> prefetchRange(int start, int count, {Object? sortKey})
+  Future<void> prefetchRange(BuildContext context, int start, int count, {Object? sortKey})
     => context.read<PinnedPageStore>().getPinnedSongs(start, count);
 
   @override
@@ -72,43 +64,15 @@ class _PinnedDesktopState extends State<PinnedDesktop> implements PresetViewData
   }
 
   @override
-  bool canAccept(BuildContext context, Object? dragData) {
-    return dragData is Song ? !dragData.pinned : false;
-  }
-
-  @override
-  void onExternalDrop(BuildContext context, Object? dragData, int insertIndex) {
-    context.read<PinnedPageStore>().addPinnedSong(dragData as Song, insertIndex);
-  }
-
-  @override
-  Object? dragDataForItem(BuildContext context, int index) {
-    return null;
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final clampedScale = MediaQuery.of(context).textScaleFactor;
-    final pinnedListLength = context.select<PinnedPageStore, int>((state) => state.songList.length);
-    
+    final songCount = context.select<PinnedPageStore, int>((store) => store.songList.length);
+
     return PresetView(
-      // theme: theme?.presetViewTheme,
-      // length: pinnedListLength,
-      header: PresetBannerHeader(header: "Pinned List"),
       dataSource: this,
       reorderDelegate: this,
-      dragDataDelegate: this,
-      itemCount: pinnedListLength,
-      // itemKey: (index) => "pinned-preset-view-index-$index|$pinnedListLength",
-      // footer: Row(
-      //   mainAxisAlignment: MainAxisAlignment.start,
-      //   children: [
-      //     Padding(
-      //       padding: EdgeInsets.all(8 * clampedScale),
-      //       child: Text("Pinned List", textAlign: TextAlign.start, style: theme?.presetViewTheme.headerTextStyle),
-      //     ),
-      //   ],
-      // ),
+      chunkSize: 4,
+      overscanChunks: 2,
+      itemCount: songCount,
     );
   }
 }

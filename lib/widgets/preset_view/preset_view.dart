@@ -79,7 +79,11 @@ class _PresetViewState extends State<PresetView> {
         ? widget.chunkSize
         : (widget.itemCount - start);
 
-      _prefetchQueue = _prefetchQueue.then((_) => widget.dataSource.prefetchRange(start, count));
+      _prefetchQueue = _prefetchQueue.then((_) {
+        if (mounted) {
+          widget.dataSource.prefetchRange(context, start, count);
+        }
+      });
     }
   }
 

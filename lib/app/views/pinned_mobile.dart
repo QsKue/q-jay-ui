@@ -49,8 +49,8 @@ class _PinnedMobileState extends State<PinnedMobile> implements PresetViewDataSo
   }
 
   @override
-  Future<void> prefetchRange(int start, int count, {Object? sortKey})
-    => mounted ? context.read<PinnedPageStore>().getPinnedSongs(start, count) : Future.value();
+  Future<void> prefetchRange(BuildContext context, int start, int count, {Object? sortKey})
+    => context.read<PinnedPageStore>().getPinnedSongs(start, count);
 
   @override
   Object sourceId(BuildContext context) {

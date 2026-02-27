@@ -74,8 +74,8 @@ class _SearchMobileState extends State<SearchMobile> implements PresetViewDataSo
   }
   
   @override
-  Future<void> prefetchRange(int start, int count, {Object? sortKey})
-    => mounted ? context.read<SearchPageStore>().getSearchSongs(_searchController.text, start, count) : Future.value();
+  Future<void> prefetchRange(BuildContext context, int start, int count, {Object? sortKey})
+    => context.read<SearchPageStore>().getSearchSongs(_searchController.text, start, count);
 
   @override
   Widget build(BuildContext context) {

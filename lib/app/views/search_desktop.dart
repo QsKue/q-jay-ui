@@ -112,7 +112,7 @@ class _SearchDesktopState extends State<SearchDesktop> implements PresetViewData
   }
   
   @override
-  Future<void> prefetchRange(int start, int count, {Object? sortKey}) async {
+  Future<void> prefetchRange(BuildContext context, int start, int count, {Object? sortKey}) async {
     context.read<SearchPageStore>().getSearchSongs("DD", start, count);
   }
 

@@ -8,36 +8,27 @@ import 'package:qjay/app/store/page_selection_store.dart';
 import 'package:qjay/app/store/player_store.dart';
 import 'package:qjay/models/song.dart';
 import 'package:qjay/models/presets.dart';
-import 'package:qjay/widgets/preset_banner/preset_banner_header.dart';
 import 'package:qjay/widgets/preset_view/preset_view.dart';
 import 'package:qjay/widgets/preset_view/preset_view_delegates.dart';
 import 'package:qjay/widgets/preset_banner/preset_banner_selection.dart';
+import 'package:qjay/widgets/preset_view/preset_view_theme.dart';
 import 'package:qjay/widgets/song_list/song_list.dart';
 import 'package:qjay/widgets/song_list/song_list_types.dart';
 
-class SelectionDesktop extends StatefulWidget {
-  const SelectionDesktop({super.key});
+class SelectionView extends StatelessWidget implements PresetViewDataSource {
+  final List<SongListColumn> _columns = const [ SongListColumn.play, SongListColumn.track, SongListColumn.pinned];
 
-  @override
-  State<SelectionDesktop> createState() => _SelectionDesktopState();
-}
+  final Selection selection;
+  final SongSortMode sortMode;
 
-class _SelectionDesktopState extends State<SelectionDesktop> implements PresetViewDataSource, PresetViewDragDataDelegate {
-  late List<SongListColumn> _columns = [];
+  const SelectionView({
+    super.key,
+    required this.selection,
+    required this.sortMode,
+  });
 
-  @override
-  void didChangeDependencies() {
-    _columns = [ SongListColumn.play, SongListColumn.track, SongListColumn.banned];
-
-    super.didChangeDependencies();
-  }
-
-  @override Object sourceId(BuildContext context) {
-    final energies = context.read<SelectionPageStore>().energies.join("-");
-    final sortMode = context.read<SelectionPageStore>().sortMode.index;
-    
-    return "selection_desktop-$energies-$sortMode";
-  }
+  @override Object sourceId(BuildContext context)
+    => "selection_view-${selection.defaultEnergies.join("-")}-${sortMode.index}";
   
   @override
   Widget itemAtIndex(BuildContext context, int index) {
@@ -90,70 +81,41 @@ class _SelectionDesktopState extends State<SelectionDesktop> implements PresetVi
   }
   
   @override
-  Future<void> prefetchRange(int start, int count, {Object? sortKey}) async {
-    context.read<SelectionPageStore>().getSelectionSongs(start, count);
-  }
-
-  @override
-  String labelForIndex(BuildContext context, int index) {
-    final song = context.read<SelectionPageStore>().songList.elementAtOrNull(index);
-
-    if (song == null) {
-      return "Song...";
-    }
-    return "${song.artist}\n${song.title}";
-  }
-
-  @override
-  bool canAccept(BuildContext context, Object? dragData) {
-    return false;
-  }
-
-  @override
-  void onExternalDrop(BuildContext context, Object? dragData, int insertIndex) {
-    return;
-  }
-
-  @override
-  Object? dragDataForItem(BuildContext context, int index) {
-    return context.read<SelectionPageStore>().songList.elementAtOrNull(index);
-  }
+  Future<void> prefetchRange(BuildContext context, int start, int count, {Object? sortKey})
+    => context.read<SelectionPageStore>().getSelectionSongs(start, count);
 
   @override
   Widget build(BuildContext context) {
+    final presetViewTheme = Theme.of(context).extension<PresetViewTheme>() ?? PresetViewTheme();
 
-    final selection = context.select<SelectionPageStore, Selection?>((store) => store.selection);
-    if (selection == null) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
+    final currentPreset = context.select<PlayerStore, (PresetType, String)?>((store) => store.currentPreset);
+    final currentPresetDetails = context.select<PlayerStore, List<int>?>((store) => store.currentPresetDetails);
+    final isCurrentSelection = (currentPreset?.$1 == PresetType.selection) && (currentPreset?.$2 == selection.id);
+    
+    final selectionToken = context.select<SelectionPageStore, int>((store) => store.selectionToken);
     final songCount = context.select<SelectionPageStore, int>((store) => store.songList.length);
-    final energies = context.select<SelectionPageStore, List<int>>((store) => store.energies);
-    final songDuration = context.select<SelectionPageStore, SongDuration>((store) => store.songDuration);
-    final sortMode = context.select<SelectionPageStore, SongSortMode>((store) => store.sortMode);
     
     return PresetView(
-      // theme: theme?.presetViewTheme,
-      header: PresetBannerHeader(
-        icon: selection.icon,
-        header: selection.name,
-      ),
+      theme: presetViewTheme.copyWith(rowSpacing: 0),
       dataSource: this,
-      dragDataDelegate: this,
+      builderKey: "selection-view-token-$selectionToken",
       itemCount: songCount,
+      chunkSize: 4,
+      overscanChunks: 2,
       pinned: Column(
         children: [
-
-          PresetBannerSelection(
-            currentEnergies: energies,
-            energies: selection.availableEnergies, defaultEnergies: selection.defaultEnergies,
-            onSelectionChanged: (selectedEnergies, songDuration) {
-              context.read<SelectionPageStore>().refreshSelection(energies: selectedEnergies, sortMode: sortMode, songDuration: songDuration);
-            },
-            onPlay: () => context.read<SelectionPageStore>().setSelection(selection.id, energies),
-          ),
+          
+          if (selection.availableEnergies.length > 1)
+            PresetBannerSelection(
+              currentEnergies: isCurrentSelection ? currentPresetDetails ?? [] : [],
+              energies: selection.availableEnergies, defaultEnergies: selection.defaultEnergies,
+              onSelectionChanged: (selectedEnergies, songDuration) {
+                context.read<SelectionPageStore>().refreshSelection(energies: selectedEnergies, sortMode: sortMode, songDuration: songDuration);
+              },
+            ),
 
           SongListHeader(
+            sortMode: sortMode,
             onColumnTap: (column) {
               SongSortMode newSortMode = sortMode;
           

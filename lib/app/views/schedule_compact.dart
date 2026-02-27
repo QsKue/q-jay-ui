@@ -14,14 +14,14 @@ import 'package:qjay/widgets/preset_view/preset_view.dart';
 import 'package:qjay/widgets/preset_view/preset_view_delegates.dart';
 import 'package:qjay/widgets/rotation_card/rotation_card.dart';
 
-class ScheduleMobile extends StatefulWidget {
-  const ScheduleMobile({super.key});
+class ScheduleCompact extends StatefulWidget {
+  const ScheduleCompact({super.key});
 
   @override
-  State<ScheduleMobile> createState() => _ScheduleMobileState();
+  State<ScheduleCompact> createState() => _ScheduleCompactState();
 }
 
-class _ScheduleMobileState extends State<ScheduleMobile> implements PresetViewDataSource {
+class _ScheduleCompactState extends State<ScheduleCompact> implements PresetViewDataSource {
 
   @override
   Object sourceId(BuildContext context) => "schedule-desktop";
@@ -37,8 +37,8 @@ class _ScheduleMobileState extends State<ScheduleMobile> implements PresetViewDa
   }
 
   @override
-  Future<void> prefetchRange(int start, int count, {Object? sortKey})
-    => mounted ? context.read<SchedulePageStore>().getScheduleRotations(start, count) : Future.value();
+  Future<void> prefetchRange(BuildContext context, start, int count, {Object? sortKey})
+    => context.read<SchedulePageStore>().getScheduleRotations(start, count);
 
   @override
   Widget build(BuildContext context) {

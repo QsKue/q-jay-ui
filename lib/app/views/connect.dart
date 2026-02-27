@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart' show openAppSettings;
 import 'package:provider/provider.dart';
+
 import 'package:qjay/app/app_shell.dart';
 import 'package:qjay/app/store/app_store.dart';
-
 import 'package:qjay/assets/q_jay_icons.dart';
 import 'package:qjay/transport/transport.dart';
 import 'package:qjay/transport/transport_events.dart';
@@ -159,6 +159,7 @@ class _ConnectPageState extends State<ConnectPage> {
     final secondAction = _status.secondAction(context, widget.transport);
 
     return AppShell(
+      shellMode: ShellMode.empty,
       navIcon: QJay.qs_logo,
       navIconAlwaysVisible: true,
       title: Align(
