@@ -3,9 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:qjay/app/store/app_store.dart';
 
 import 'package:qjay/app/store/page_schedule_store.dart';
-import 'package:qjay/app/theme/app_context.dart';
 
-import 'schedule_desktop.dart';
 import 'schedule_mobile.dart';
 
 class SchedulePage extends StatelessWidget {
@@ -21,10 +19,6 @@ class SchedulePage extends StatelessWidget {
     return ChangeNotifierProvider<SchedulePageStore>(
       create: (context) => SchedulePageStore(context.read<AppStore>().transport)..load(id),
       builder: (context, _) {
-        if (context.isDesktopDevice) {
-          return ScheduleDesktop();
-        }
-          
         return ScheduleMobile();
       },
     );
