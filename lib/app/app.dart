@@ -15,10 +15,8 @@ import 'package:qjay/app/theme/app_theme.dart';
 import 'package:qjay/app/theme/theme_controller.dart';
 import 'package:qjay/app/views/app_loading.dart';
 import 'package:qjay/app/views/connect.dart';
-import 'package:qjay/app/views/connect_mobile.dart';
 import 'package:qjay/app/views/onboarding.dart';
 import 'package:qjay/transport/transport.dart';
-import 'package:qjay/widgets/errors/alert_dialog.dart' show clearDialogs;
 import 'package:qjay/widgets/resize_grip.dart';
 
 class MyApp extends StatefulWidget {
