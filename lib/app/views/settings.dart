@@ -8,7 +8,6 @@ import 'package:qjay/app/store/player_store.dart';
 import 'package:qjay/assets/q_jay_icons.dart';
 import 'package:qjay/models/common.dart';
 import 'package:qjay/widgets/errors/alert_dialog.dart';
-import 'package:qjay/widgets/player_bar/player_bar_compact.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
