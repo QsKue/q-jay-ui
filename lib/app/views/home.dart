@@ -62,16 +62,13 @@ class HomePage extends StatelessWidget {
     if (context.screenSize == ScreenSize.compact) {
       return const HomeCompact();
     }
-
-    if (context.screenSize == ScreenSize.medium) {
-      return const HomeCompact();
-    }
-
+    
     final searchQuery = context.select<SearchPageStore, String>((store) => store.currentQuery);
     
     return AppShell(
       navIcon: QJay.qs_logo,
       body: searchQuery.isNotEmpty ? SearchView(query: searchQuery) : _presetView(context),
+      navigationIndex: 0,
     );
   }
 }

@@ -46,7 +46,8 @@ class SelectionPage extends StatelessWidget {
 
           return SelectionView(selection: selection, sortMode: SongSortMode.titleAscending);
         }
-      )
+      ),
+      navigationIndex: 0,
     );
   }
 }

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'pinned_mobile.dart';
+import 'package:qjay/app/app_shell.dart';
+import 'package:qjay/app/theme/app_context.dart';
+import 'package:qjay/app/views/pinned_view.dart';
+import 'package:qjay/assets/q_jay_icons.dart';
+
+import 'pinned_compact.dart';
 
 class PinnedPage extends StatelessWidget {
   
@@ -8,10 +13,14 @@ class PinnedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // if (context.isDesktopDevice) {
-    //   return PinnedDesktop();
-    // }
+    if (context.screenSize == ScreenSize.compact) {
+      return const PinnedMobile();
+    }
 
-    return PinnedMobile();
+    return AppShell(
+      navIcon: QJay.qs_logo,
+      body: PinnedView(),
+      navigationIndex: 1,
+    );
   }
 }

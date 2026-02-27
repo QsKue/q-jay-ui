@@ -14,14 +14,14 @@ import 'package:qjay/widgets/song_list/song_list_types.dart';
 
 const _defaultColumns = [SongListColumn.play, SongListColumn.track, SongListColumn.pinned];
 
-class SearchMobile extends StatefulWidget {
-  const SearchMobile({super.key});
+class SearchCompact extends StatefulWidget {
+  const SearchCompact({super.key});
 
   @override
-  State<SearchMobile> createState() => _SearchMobileState();
+  State<SearchCompact> createState() => _SearchCompactState();
 }
 
-class _SearchMobileState extends State<SearchMobile> implements PresetViewDataSource {
+class _SearchCompactState extends State<SearchCompact> implements PresetViewDataSource {
   TextEditingController _searchController = TextEditingController();
 
   @override Object sourceId(BuildContext context) {

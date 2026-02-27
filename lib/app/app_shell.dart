@@ -18,12 +18,14 @@ import 'package:qjay/widgets/navigation_bar/bottom_navigation_bar.dart';
 import 'package:qjay/widgets/player_bar/player_bar_compact.dart';
 
 enum ShellMode {
-  empty, compact, expanded;
+  empty, compact, basic, expanded;
 
   static ShellMode fromScreenSize(ScreenSize screenSize) {
     switch (screenSize) {
       case ScreenSize.compact:
         return compact;
+      case ScreenSize.medium:
+      return basic;
       default:
         return expanded;
     }
@@ -178,6 +180,7 @@ class AppShell extends StatelessWidget {
     final colorScheme = ColorScheme.of(context);
 
     final mode = shellMode ?? ShellMode.fromScreenSize(context.screenSize);
+    final showBottomNav = mode == ShellMode.compact || mode == ShellMode.basic;
 
     return Scaffold(
       appBar: AppBar(
@@ -256,7 +259,7 @@ class AppShell extends StatelessWidget {
         ],
       ),
       body: shellBody(context),
-      bottomNavigationBar: navigationIndex != null ? AppBottomNavigationBar(index: navigationIndex!) : null,
+      bottomNavigationBar: navigationIndex != null && showBottomNav ? AppBottomNavigationBar(index: navigationIndex!) : null,
     );
   }
 }

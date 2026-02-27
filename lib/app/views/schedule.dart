@@ -26,10 +26,6 @@ class SchedulePage extends StatelessWidget {
       return const ScheduleCompact();
     }
 
-    if (context.screenSize == ScreenSize.medium) {
-      return const ScheduleCompact();
-    }
-
     return AppShell(
       navIcon: QJay.qs_logo,
       body: ChangeNotifierProvider<SchedulePageStore>(
@@ -44,6 +40,7 @@ class SchedulePage extends StatelessWidget {
           return ScheduleView(schedule: schedule);
         },
       ),
+      navigationIndex: 0,
     );
   }
 }
