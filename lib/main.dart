@@ -24,22 +24,23 @@ Future<void> main() async {
   if ((Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
     await windowManager.ensureInitialized();
     
-    WindowOptions windowOptions = WindowOptions(
-      size: Size(400, 1080),
-      center: true,
-      backgroundColor: Colors.transparent,
-      skipTaskbar: false,
-      titleBarStyle: TitleBarStyle.hidden,
+    await windowManager.waitUntilReadyToShow(
+      WindowOptions(
+        size: Size(1280, 720),
+        center: true,
+        backgroundColor: Colors.transparent,
+        skipTaskbar: false,
+        titleBarStyle: TitleBarStyle.hidden,
+      ),
+      () async {
+        await windowManager.setResizable(true);
+
+        await windowManager.show();
+        await windowManager.focus();
+        await windowManager.center();
+        await windowManager.maximize();
+      }
     );
-
-    windowManager.waitUntilReadyToShow(windowOptions, () async {
-      await windowManager.setResizable(true);
-
-      await windowManager.show();
-      await windowManager.focus();
-      await windowManager.center();
-      // await windowManager.maximize();
-    });
   }
 
   runApp(
