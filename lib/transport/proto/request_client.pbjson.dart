@@ -128,6 +128,19 @@ const AddOfflineKey$json = {
 final $typed_data.Uint8List addOfflineKeyDescriptor =
     $convert.base64Decode('Cg1BZGRPZmZsaW5lS2V5EhAKA2tleRgBIAEoCVIDa2V5');
 
+@$core.Deprecated('Use setAnnouncementIntervalDescriptor instead')
+const SetAnnouncementInterval$json = {
+  '1': 'SetAnnouncementInterval',
+  '2': [
+    {'1': 'seconds', '3': 1, '4': 1, '5': 4, '10': 'seconds'},
+  ],
+};
+
+/// Descriptor for `SetAnnouncementInterval`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List setAnnouncementIntervalDescriptor =
+    $convert.base64Decode(
+        'ChdTZXRBbm5vdW5jZW1lbnRJbnRlcnZhbBIYCgdzZWNvbmRzGAEgASgEUgdzZWNvbmRz');
+
 @$core.Deprecated('Use clientRequestDescriptor instead')
 const ClientRequest$json = {
   '1': 'ClientRequest',
@@ -213,6 +226,15 @@ const ClientRequest$json = {
       '9': 0,
       '10': 'addOfflineKey'
     },
+    {
+      '1': 'set_announcement_interval',
+      '3': 10,
+      '4': 1,
+      '5': 11,
+      '6': '.request_client.SetAnnouncementInterval',
+      '9': 0,
+      '10': 'setAnnouncementInterval'
+    },
   ],
   '8': [
     {'1': 'action'},
@@ -234,4 +256,6 @@ final $typed_data.Uint8List clientRequestDescriptor = $convert.base64Decode(
     'dGF0dXMSWwoVdmFsaWRhdGVfc3Vic2NyaXB0aW9uGAggASgLMiQucmVxdWVzdF9jbGllbnQuVm'
     'FsaWRhdGVTdWJzY3JpcHRpb25IAFIUdmFsaWRhdGVTdWJzY3JpcHRpb24SRwoPYWRkX29mZmxp'
     'bmVfa2V5GAkgASgLMh0ucmVxdWVzdF9jbGllbnQuQWRkT2ZmbGluZUtleUgAUg1hZGRPZmZsaW'
-    '5lS2V5QggKBmFjdGlvbg==');
+    '5lS2V5EmUKGXNldF9hbm5vdW5jZW1lbnRfaW50ZXJ2YWwYCiABKAsyJy5yZXF1ZXN0X2NsaWVu'
+    'dC5TZXRBbm5vdW5jZW1lbnRJbnRlcnZhbEgAUhdzZXRBbm5vdW5jZW1lbnRJbnRlcnZhbEIICg'
+    'ZhY3Rpb24=');

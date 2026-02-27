@@ -68,3 +68,8 @@ message Song {
 message SongList {
   repeated Song songs = 1;
 }
+
+message UserState {
+  PresetInfo preset = 1;
+  float volume = 2;
+}

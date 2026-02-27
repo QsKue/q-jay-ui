@@ -854,6 +854,75 @@ class SongList extends $pb.GeneratedMessage {
   $pb.PbList<Song> get songs => $_getList(0);
 }
 
+class UserState extends $pb.GeneratedMessage {
+  factory UserState({
+    PresetInfo? preset,
+    $core.double? volume,
+  }) {
+    final result = create();
+    if (preset != null) result.preset = preset;
+    if (volume != null) result.volume = volume;
+    return result;
+  }
+
+  UserState._();
+
+  factory UserState.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UserState.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UserState',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'remote'),
+      createEmptyInstance: create)
+    ..aOM<PresetInfo>(1, _omitFieldNames ? '' : 'preset',
+        subBuilder: PresetInfo.create)
+    ..aD(2, _omitFieldNames ? '' : 'volume', fieldType: $pb.PbFieldType.OF)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserState clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  UserState copyWith(void Function(UserState) updates) =>
+      super.copyWith((message) => updates(message as UserState)) as UserState;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static UserState create() => UserState._();
+  @$core.override
+  UserState createEmptyInstance() => create();
+  static $pb.PbList<UserState> createRepeated() => $pb.PbList<UserState>();
+  @$core.pragma('dart2js:noInline')
+  static UserState getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserState>(create);
+  static UserState? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  PresetInfo get preset => $_getN(0);
+  @$pb.TagNumber(1)
+  set preset(PresetInfo value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasPreset() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPreset() => $_clearField(1);
+  @$pb.TagNumber(1)
+  PresetInfo ensurePreset() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.double get volume => $_getN(1);
+  @$pb.TagNumber(2)
+  set volume($core.double value) => $_setFloat(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasVolume() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearVolume() => $_clearField(2);
+}
+
 const $core.bool _omitFieldNames =
     $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =

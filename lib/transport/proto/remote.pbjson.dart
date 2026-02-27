@@ -226,3 +226,24 @@ const SongList$json = {
 /// Descriptor for `SongList`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List songListDescriptor = $convert.base64Decode(
     'CghTb25nTGlzdBIiCgVzb25ncxgBIAMoCzIMLnJlbW90ZS5Tb25nUgVzb25ncw==');
+
+@$core.Deprecated('Use userStateDescriptor instead')
+const UserState$json = {
+  '1': 'UserState',
+  '2': [
+    {
+      '1': 'preset',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.remote.PresetInfo',
+      '10': 'preset'
+    },
+    {'1': 'volume', '3': 2, '4': 1, '5': 2, '10': 'volume'},
+  ],
+};
+
+/// Descriptor for `UserState`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List userStateDescriptor = $convert.base64Decode(
+    'CglVc2VyU3RhdGUSKgoGcHJlc2V0GAEgASgLMhIucmVtb3RlLlByZXNldEluZm9SBnByZXNldB'
+    'IWCgZ2b2x1bWUYAiABKAJSBnZvbHVtZQ==');

@@ -47,6 +47,10 @@ message AddOfflineKey {
   string key = 1;
 }
 
+message SetAnnouncementInterval {
+  uint64 seconds = 1;
+}
+
 message ClientRequest {
   oneof action {
     SetupClient setup_client = 1;
@@ -58,5 +62,6 @@ message ClientRequest {
     SubscriptionStatus subscription_status = 7;
     ValidateSubscription validate_subscription = 8;
     AddOfflineKey add_offline_key = 9;
+    SetAnnouncementInterval set_announcement_interval = 10;
   }
 }

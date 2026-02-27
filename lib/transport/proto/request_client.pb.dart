@@ -12,6 +12,7 @@
 
 import 'dart:core' as $core;
 
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
@@ -581,6 +582,64 @@ class AddOfflineKey extends $pb.GeneratedMessage {
   void clearKey() => $_clearField(1);
 }
 
+class SetAnnouncementInterval extends $pb.GeneratedMessage {
+  factory SetAnnouncementInterval({
+    $fixnum.Int64? seconds,
+  }) {
+    final result = create();
+    if (seconds != null) result.seconds = seconds;
+    return result;
+  }
+
+  SetAnnouncementInterval._();
+
+  factory SetAnnouncementInterval.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory SetAnnouncementInterval.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'SetAnnouncementInterval',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'request_client'),
+      createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, _omitFieldNames ? '' : 'seconds', $pb.PbFieldType.OU6,
+        defaultOrMaker: $fixnum.Int64.ZERO)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SetAnnouncementInterval clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  SetAnnouncementInterval copyWith(
+          void Function(SetAnnouncementInterval) updates) =>
+      super.copyWith((message) => updates(message as SetAnnouncementInterval))
+          as SetAnnouncementInterval;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SetAnnouncementInterval create() => SetAnnouncementInterval._();
+  @$core.override
+  SetAnnouncementInterval createEmptyInstance() => create();
+  static $pb.PbList<SetAnnouncementInterval> createRepeated() =>
+      $pb.PbList<SetAnnouncementInterval>();
+  @$core.pragma('dart2js:noInline')
+  static SetAnnouncementInterval getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<SetAnnouncementInterval>(create);
+  static SetAnnouncementInterval? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get seconds => $_getI64(0);
+  @$pb.TagNumber(1)
+  set seconds($fixnum.Int64 value) => $_setInt64(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasSeconds() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSeconds() => $_clearField(1);
+}
+
 enum ClientRequest_Action {
   setupClient,
   setupWithUpdate,
@@ -591,6 +650,7 @@ enum ClientRequest_Action {
   subscriptionStatus,
   validateSubscription,
   addOfflineKey,
+  setAnnouncementInterval,
   notSet
 }
 
@@ -605,6 +665,7 @@ class ClientRequest extends $pb.GeneratedMessage {
     SubscriptionStatus? subscriptionStatus,
     ValidateSubscription? validateSubscription,
     AddOfflineKey? addOfflineKey,
+    SetAnnouncementInterval? setAnnouncementInterval,
   }) {
     final result = create();
     if (setupClient != null) result.setupClient = setupClient;
@@ -619,6 +680,8 @@ class ClientRequest extends $pb.GeneratedMessage {
     if (validateSubscription != null)
       result.validateSubscription = validateSubscription;
     if (addOfflineKey != null) result.addOfflineKey = addOfflineKey;
+    if (setAnnouncementInterval != null)
+      result.setAnnouncementInterval = setAnnouncementInterval;
     return result;
   }
 
@@ -642,13 +705,14 @@ class ClientRequest extends $pb.GeneratedMessage {
     7: ClientRequest_Action.subscriptionStatus,
     8: ClientRequest_Action.validateSubscription,
     9: ClientRequest_Action.addOfflineKey,
+    10: ClientRequest_Action.setAnnouncementInterval,
     0: ClientRequest_Action.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(
       _omitMessageNames ? '' : 'ClientRequest',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'request_client'),
       createEmptyInstance: create)
-    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9])
+    ..oo(0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     ..aOM<SetupClient>(1, _omitFieldNames ? '' : 'setupClient',
         subBuilder: SetupClient.create)
     ..aOM<SetupWithUpdate>(2, _omitFieldNames ? '' : 'setupWithUpdate',
@@ -668,6 +732,9 @@ class ClientRequest extends $pb.GeneratedMessage {
         subBuilder: ValidateSubscription.create)
     ..aOM<AddOfflineKey>(9, _omitFieldNames ? '' : 'addOfflineKey',
         subBuilder: AddOfflineKey.create)
+    ..aOM<SetAnnouncementInterval>(
+        10, _omitFieldNames ? '' : 'setAnnouncementInterval',
+        subBuilder: SetAnnouncementInterval.create)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -700,6 +767,7 @@ class ClientRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   @$pb.TagNumber(8)
   @$pb.TagNumber(9)
+  @$pb.TagNumber(10)
   ClientRequest_Action whichAction() =>
       _ClientRequest_ActionByTag[$_whichOneof(0)]!;
   @$pb.TagNumber(1)
@@ -711,6 +779,7 @@ class ClientRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   @$pb.TagNumber(8)
   @$pb.TagNumber(9)
+  @$pb.TagNumber(10)
   void clearAction() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
@@ -811,6 +880,18 @@ class ClientRequest extends $pb.GeneratedMessage {
   void clearAddOfflineKey() => $_clearField(9);
   @$pb.TagNumber(9)
   AddOfflineKey ensureAddOfflineKey() => $_ensure(8);
+
+  @$pb.TagNumber(10)
+  SetAnnouncementInterval get setAnnouncementInterval => $_getN(9);
+  @$pb.TagNumber(10)
+  set setAnnouncementInterval(SetAnnouncementInterval value) =>
+      $_setField(10, value);
+  @$pb.TagNumber(10)
+  $core.bool hasSetAnnouncementInterval() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearSetAnnouncementInterval() => $_clearField(10);
+  @$pb.TagNumber(10)
+  SetAnnouncementInterval ensureSetAnnouncementInterval() => $_ensure(9);
 }
 
 const $core.bool _omitFieldNames =

@@ -16,6 +16,8 @@ For more details, please see the [LICENSE](LICENSE) file.
 This is the crossplatform UI for the QJay Remote app for mobile & desktop.
 
 QJay uses protobuf protocol for communication.
+For regenration use:
+protoc -Ilib/transport/proto -I/usr/include --dart_out=lib/transport/proto lib/transport/proto/*.proto /usr/include/google/protobuf/empty.proto /usr/include/google/protobuf/timestamp.proto
 
 Transport works accross FFI, BLE and HTTP.
 Communication occurs via 1 endpoint through which all messages are passed.
