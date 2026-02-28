@@ -128,6 +128,40 @@ class AppShell extends StatelessWidget {
                       ),
                   
                     Expanded(child: body),
+
+                    if (mode == ShellMode.expanded)
+                      Consumer<NavRailStore>(
+                        builder: (context, navRailStore, _) {
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  left: BorderSide(
+                                    color: colorScheme.outlineVariant, // or outline
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                              child: SizedBox(
+                                width: 320,
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Pinned List",
+                                      style: themeData.textTheme.headlineSmall?.copyWith(
+                                        color: colorScheme.onSurfaceVariant,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Expanded(child: PinnedView()),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      ),
                   ],
                 ),
               ),
@@ -136,40 +170,6 @@ class AppShell extends StatelessWidget {
             ],
           ),
         ),
-
-        if (mode == ShellMode.expanded)
-          Consumer<NavRailStore>(
-            builder: (context, navRailStore, _) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      left: BorderSide(
-                        color: colorScheme.outlineVariant, // or outline
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  child: SizedBox(
-                    width: 320,
-                    child: Column(
-                      children: [
-                        Text(
-                          "Pinned List",
-                          style: themeData.textTheme.headlineSmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Expanded(child: PinnedView()),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }
-          ),
       ]
     );
   }
