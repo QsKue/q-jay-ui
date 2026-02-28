@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -201,127 +203,128 @@ class _SettingsPageState extends State<SettingsPage> {
         
           const SizedBox(height: 16),
         
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "W-Fi",
-                        style: themeData.textTheme.titleLarge?.copyWith(
-                          color: colorScheme.onSurface,
-                          fontWeight: FontWeight.bold,
+          if (!(Platform.isWindows || Platform.isLinux || Platform.isMacOS))
+            Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "W-Fi",
+                          style: themeData.textTheme.titleLarge?.copyWith(
+                            color: colorScheme.onSurface,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-            
-                      IconButton(
-                        icon: Icon(Icons.refresh_rounded),
-                        onPressed: _ssids == null && !_isInitial ? null : () {
-                          _updateWifiInfo();
-                          _passwordController.clear();
-                          setState(() {
-                            _isInitial = false;
-                            _ssids = _currentSsid = _activeSsid = null;
-                          });
-                        }
-                      )
-                    ]
-                  ),
-            
-                  const SizedBox(height: 12),
-            
-                  if (_ssids == null)
-                    SizedBox(
-                      height: 132,
-                      child: Center(
-                        child: _isInitial
-                        ? Text("Refresh to get status", style: themeData.textTheme.titleMedium?.copyWith(color: colorScheme.onSurface))
-                        : CircularProgressIndicator()
-                      ),
+              
+                        IconButton(
+                          icon: Icon(Icons.refresh_rounded),
+                          onPressed: _ssids == null && !_isInitial ? null : () {
+                            _updateWifiInfo();
+                            _passwordController.clear();
+                            setState(() {
+                              _isInitial = false;
+                              _ssids = _currentSsid = _activeSsid = null;
+                            });
+                          }
+                        )
+                      ]
                     ),
-            
-                  if (_ssids != null) ...[
-                      Text(
-                        _activeSsid == null ? "Disconnected" : "Connected ($_activeSsid)",
-                        style: themeData.textTheme.titleMedium?.copyWith(
-                          color: _activeSsid == null ? colorScheme.onSurface.withValues(alpha: 0.6) : colorScheme.primary,
-                          wordSpacing: 2,
-                          fontWeight: FontWeight.bold,
+              
+                    const SizedBox(height: 12),
+              
+                    if (_ssids == null)
+                      SizedBox(
+                        height: 132,
+                        child: Center(
+                          child: _isInitial
+                          ? Text("Refresh to get status", style: themeData.textTheme.titleMedium?.copyWith(color: colorScheme.onSurface))
+                          : CircularProgressIndicator()
                         ),
                       ),
-                      
-                      const SizedBox(height: 4),
-            
-                      DropdownButton<String>(
-                        isExpanded: true,
-                        value: _ssids?.isNotEmpty ?? false ? _currentSsid : "No networks found",
-                        icon: const Icon(Icons.arrow_drop_down),
-                        elevation: 16,
-                        dropdownColor: colorScheme.surfaceContainerHigh,
-                        style: themeData.textTheme.titleMedium?.copyWith(
-                          color: colorScheme.onSurface,
+              
+                    if (_ssids != null) ...[
+                        Text(
+                          _activeSsid == null ? "Disconnected" : "Connected ($_activeSsid)",
+                          style: themeData.textTheme.titleMedium?.copyWith(
+                            color: _activeSsid == null ? colorScheme.onSurface.withValues(alpha: 0.6) : colorScheme.primary,
+                            wordSpacing: 2,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        onChanged: (String? value) {
-                          setState(() => _currentSsid = value);
-                        },
-                        items: (_ssids?.isNotEmpty ?? false ? _ssids! : ["No networks found"])
-                          .map<DropdownMenuItem<String>>((String value)
-                            => DropdownMenuItem<String>(value: value, child: Text(value))).toList(),
-                      ),
-            
-                      const SizedBox(height: 8),
-            
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: _passwordController,
-                              enabled: (_ssids?.isNotEmpty ?? false) && _activeSsid != _currentSsid,
-                              obscureText: true,
-                              style: themeData.textTheme.bodyMedium?.copyWith(
-                                color: colorScheme.onPrimary
-                              ),
-                              decoration: InputDecoration(
-                                isDense: true,
-                                hintText: "Password",
-                                border: const OutlineInputBorder(),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                hintStyle: themeData.textTheme.bodyMedium?.copyWith(
-                                  color: colorScheme.onSurface
+                        
+                        const SizedBox(height: 4),
+              
+                        DropdownButton<String>(
+                          isExpanded: true,
+                          value: _ssids?.isNotEmpty ?? false ? _currentSsid : "No networks found",
+                          icon: const Icon(Icons.arrow_drop_down),
+                          elevation: 16,
+                          dropdownColor: colorScheme.surfaceContainerHigh,
+                          style: themeData.textTheme.titleMedium?.copyWith(
+                            color: colorScheme.onSurface,
+                          ),
+                          onChanged: (String? value) {
+                            setState(() => _currentSsid = value);
+                          },
+                          items: (_ssids?.isNotEmpty ?? false ? _ssids! : ["No networks found"])
+                            .map<DropdownMenuItem<String>>((String value)
+                              => DropdownMenuItem<String>(value: value, child: Text(value))).toList(),
+                        ),
+              
+                        const SizedBox(height: 8),
+              
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: _passwordController,
+                                enabled: (_ssids?.isNotEmpty ?? false) && _activeSsid != _currentSsid,
+                                obscureText: true,
+                                style: themeData.textTheme.bodyMedium?.copyWith(
+                                  color: colorScheme.onPrimary
+                                ),
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  hintText: "Password",
+                                  border: const OutlineInputBorder(),
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                  hintStyle: themeData.textTheme.bodyMedium?.copyWith(
+                                    color: colorScheme.onSurface
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          OutlinedButton(
-                            onPressed: (_ssids?.isNotEmpty ?? false) && _activeSsid != _currentSsid ? () {
-                              if (_currentSsid == null || _passwordController.text.isEmpty) return;
-            
-                              context.read<AppStore>().connectToSsid(_currentSsid!, _passwordController.text).then((_) {
-                                if (mounted) {
-                                  _updateWifiInfo();
-                                }
-                              });
-            
-                              _passwordController.clear();
-                              setState(() => _ssids = _currentSsid = _activeSsid = null);
-                            } : null,
-                            child: const Text("Connect"),
-                          ),
-                        ],
-                      ),
-                    ]
-                ],
+                            const SizedBox(width: 8),
+                            OutlinedButton(
+                              onPressed: (_ssids?.isNotEmpty ?? false) && _activeSsid != _currentSsid ? () {
+                                if (_currentSsid == null || _passwordController.text.isEmpty) return;
+              
+                                context.read<AppStore>().connectToSsid(_currentSsid!, _passwordController.text).then((_) {
+                                  if (mounted) {
+                                    _updateWifiInfo();
+                                  }
+                                });
+              
+                                _passwordController.clear();
+                                setState(() => _ssids = _currentSsid = _activeSsid = null);
+                              } : null,
+                              child: const Text("Connect"),
+                            ),
+                          ],
+                        ),
+                      ]
+                  ],
+                ),
               ),
             ),
-          ),
             
           const SizedBox(height: 16),
             

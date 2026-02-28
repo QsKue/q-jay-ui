@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qjay/app/navigator.dart';
 import 'package:qjay/app/store/page_search_store.dart';
 import 'package:qjay/app/views/pinned_view.dart';
 import 'package:window_manager/window_manager.dart';
@@ -237,6 +238,12 @@ class AppShell extends StatelessWidget {
           : title,
         actions: [
           if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) ...[
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () async {
+                context.read<NavigationStore>().gotoPage(context, Routes.settings);
+              },
+            ),
             IconButton(
               icon: const Icon(Icons.remove),
               onPressed: () => windowManager.minimize(),
