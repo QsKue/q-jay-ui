@@ -311,7 +311,6 @@ class TransportHttp extends TransportDynamic {
         return;
 
       case _wsCurrentSong:
-        // reserved (your Rust HTTP runner doesn’t emit it yet)
         if (payload.length == 16) {
           final uuid = Uuid.unparse(payload);
           handleWithResponse<List<Song>>(ProtoRequest.getSong(uuid)).then((song) {
